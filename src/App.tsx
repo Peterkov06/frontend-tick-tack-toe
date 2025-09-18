@@ -1,34 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { createContext, useContext, useEffect, useState } from 'react'
+import Button from './component/Button'
+
+export type fieldContextModel = 
+{
+  fieldData: (boolean | null)[][],
+}
+
+export const fieldContext = createContext<fieldContextModel>({fieldData: []})
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [field, setField] = useState<(boolean | null)[][]>([])
 
+  useEffect(() => {
+    let gameBoard: (boolean | null)[][] = new Array(3).fill(new Array(3).fill(null))
+    setField(gameBoard);
+  }, [])
+
+  function setButton(x: number, y: number, val)
+  {
+    const nextField = field.map((row, fYI) =>
+    {
+      row.map((fx, fXI) => {
+        if (fXI === x && fYI === y)
+        {
+
+        }
+      })
+    }
+    )
+    setField()
+  }
+  
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className='fieldGrid'>
+      <fieldContext.Provider value={{fieldData: field}}>
+        {
+          field.map((y, yI) => y.map((x, xI) => <Button x={xI} y={yI}></Button>))
+        }
+      </fieldContext.Provider>
+    </div>
   )
 }
 
