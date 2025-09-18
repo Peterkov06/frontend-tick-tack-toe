@@ -4,6 +4,7 @@ import Button from './component/Button'
 export type fieldContextModel = 
 {
   fieldData: (boolean | null)[][],
+  setButton: () => void,
 }
 
 export const fieldContext = createContext<fieldContextModel>({fieldData: []})
@@ -16,19 +17,10 @@ function App() {
     setField(gameBoard);
   }, [])
 
-  function setButton(x: number, y: number, val)
+  function setButton(x: number, y: number, val: boolean | null)
   {
-    const nextField = field.map((row, fYI) =>
-    {
-      row.map((fx, fXI) => {
-        if (fXI === x && fYI === y)
-        {
-
-        }
-      })
-    }
-    )
-    setField()
+    const nextField = field.map((row, fYI) => row.map((fx, fXI) => (fXI === x && fYI === y ? fx = val : fx)));
+    setField(nextField);
   }
   
   return (
